@@ -1,16 +1,16 @@
-3					
+3																		
 4					
 What is a variable?		
 No one knows 		
 Containers for storing data values
 An unknown numerical value
 Something you need to find
-3					
+2		
 What is the JVM?
 Java virtual music
 A car part
 Java virtual machine
-Don’t know
+Don't know
 3
 What would you use to print something to the console?
 Echo
@@ -22,7 +22,7 @@ Are Strings mutable?
 Maybe
 Yes
 No
-Don’t mess with the Reflections API
+Don't mess with the Reflections API
 3			
 2
 How do you loop through an array?
@@ -30,17 +30,17 @@ Yell at the computer to loop.
 Ask computer nicely
 Write binary for that code
 Use a for loop
-3
+4
 What is a constructor?
 A special method that creates an instance of a class
 It constructs buildings
 It constructs pizza
-It doesn’t construct anything
-3
+It doesn't construct anything
 1
-2 + 2 =
+1
+2 + 2 = ?
 one
 two
 three
 four
-3
+4
