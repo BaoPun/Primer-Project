@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.Creature;
+
 /**
  * This class contains the player's life, and the generated levels of the maze.
  * @author baoph
@@ -18,6 +20,7 @@ import java.util.Scanner;
  */
 public class Game {
 	private int life;	// Expert = 1, Novice = 2, Beginner = 3
+	private int x, y;	// row, col position of where we are
 	
 	// MVP: 3 creatures per level
 	private List<Creature> levelOne = new ArrayList<Creature>();			
@@ -25,15 +28,100 @@ public class Game {
 	private List<Creature> levelThree = new ArrayList<Creature>();
 	// private List<List<Creature>> levels;
 	
-	// Handles all inputs
-	private Scanner scanner;
-	
-	
 	public Game(String filename) throws IOException {
 		
 		this.life = 30;
+		this.x = this.y = 0;
 		this.readFromFile(filename);
 		
+	}
+	
+	/**
+	 * @return the x
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * @param x the x to set
+	 */
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	/**
+	 * @return the y
+	 */
+	public int getY() {
+		return y;
+	}
+
+	/**
+	 * @param y the y to set
+	 */
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	// Check if we won the game
+	public boolean checkIfWin() {
+		
+		// Check level 1
+		for(int i = 0; i < levelOne.size(); i++) {
+			if(!levelOne.get(i).isAnsweredCorrectly())
+				return false;
+		}
+		
+		
+		// Check level 2
+		for(int i = 0; i < levelTwo.size(); i++) {
+			if(!levelTwo.get(i).isAnsweredCorrectly())
+				return false;
+		}
+		
+		
+		// Check level 3
+		for(int i = 0; i < levelThree.size(); i++) {
+			if(!levelThree.get(i).isAnsweredCorrectly())
+				return false;
+		}
+		
+		
+		return true;
+	}
+	
+	public void playGame() {
+		
+		// Game loop: play the game while we still have questions to answer (WIN) and/or we still have life (LOSE).
+		while(life > 0 && !checkIfWin()) {
+			
+			// Step 1: interact with the monster based on our current position
+			interactWithMonster();
+			
+			// Set up UI to output questions and answers.
+			
+			break;
+		}
+	}
+	
+	public void interactWithMonster() {
+		// First, check what level we're currently on.
+		if(this.x == 0) {
+			System.out.println("Level 1");
+			
+			
+		}
+		else if(this.x == 1) {
+			System.out.println("Level 2");
+			
+			
+		}
+		else {
+			System.out.println("Level 3");
+			
+			
+		}
 	}
 	
 	// Ugly method to read from the file
@@ -94,5 +182,10 @@ public class Game {
 	        }
 	    }
 	}
+
+	
+	
+	
+	
 	
 }

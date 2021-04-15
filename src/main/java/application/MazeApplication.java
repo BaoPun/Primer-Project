@@ -2,13 +2,18 @@ package application;
 
 import java.io.IOException;
 
-import model.Game;
+import controller.GameController;
 
 public class MazeApplication {
 
 	public static void main(String[] args) throws IOException {
-		System.out.println("Welcome to our Maze :)\n");
 		
-		Game game = new Game("src/main/resources/mazeInput.txt");
+		GameController game = new GameController("src/main/resources/mazeInput.txt");
+		game.introduction();
+		
+		game.play();
+		
+		// We lose regardless :)
+		game.displayLoseMessage();
 	}
 }
