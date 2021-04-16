@@ -21,7 +21,7 @@ public abstract class Creature {
 		this.answers[3] = a4;
 		this.correctIdx = correctIdx;
 		this.isAnsweredCorrectly = false;
-		this.typeOfQuestion = "***I am Polymorphics***";
+		this.typeOfQuestion = "***I am Polymorphic***";
 	}
 	
 	
