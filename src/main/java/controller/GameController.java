@@ -18,6 +18,10 @@ public class GameController {
 		scanner = new Scanner(System.in);
 	}
 	
+	/**
+	 * Outputs the introduction to the game, as well as a confirmation to start or quit the game
+	 * @throws InvalidStartException if an invalid confirmation input was provided
+	 */
 	public void introduction() {
 		System.out.println("Welcome to the MazeRunner.");
 		System.out.println("If you dare to enter you will be tested on your knowledge of all things Java.");
@@ -53,17 +57,58 @@ public class GameController {
 		} while(invalid);
 	}
 	
+	/**
+	 * Game loop to interact with the Game object
+	 */
 	public void play() {
 		introduction();
-		game.playGame();
 		
+		// Game loop: play the game while we still have questions to answer (WIN) and/or we still have life (LOSE).
+		while(game.getLife() > 0 && !game.checkIfWin()) {
+			
+			// Step 1: interact with the monster based on our current position
+			interactWithMonster();
+			
+		}
+		
+		if(game.checkIfWin())
+			displayWinMessage();
 	}
 	
+	public void interactWithMonster() {
+		
+		// Print what level we're on.
+		System.out.println("\nYou are on Level " + (game.getX() + 1) + ".  You have " + game.getLife() + " life left.");
+		
+		// If we haven't answered a question from the current monster, then prompt their question.
+		if(!game.getOneQuestion().isAnsweredCorrectly()) {
+			
+			System.out.println("\nAs you enter the maze you encounter a strange Creature.\r");
+			System.out.println("RRRR! who goes there? You shall not pass unless you can answer my question correctly.\n");
+			
+			// Print out the current question we're on.
+			game.printOneQuestion();
+			
+			// Answer the question
+			game.answerQuestion();
+	
+		}
+		
+		// Assuming we answer the question correctly, we get to move on
+		System.out.println("\n");
+	}
+	
+	/**
+	 * If we win the game, display this message
+	 */
 	public void displayWinMessage() {
 		System.out.println("Wow Congratulations! You really know your stuff.");
 		System.out.println("Now go into the world with your head held high knowing you beat the maze and that you are a true Java Developer!");
 	}
 	
+	/**
+	 * If we lose the game, display this message
+	 */
 	public void displayLoseMessage() {
 		System.out.println("Well, well, well… and you call yourself a Java Developer.");
 		System.out.println("Jokes on you. It’s clear that you need some help, so here’s a resource that will whip you into shape:");
