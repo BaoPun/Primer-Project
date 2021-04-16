@@ -30,6 +30,8 @@ public class Game {
 	private List<Creature> levelOne = new ArrayList<Creature>();			
 	private List<Creature> levelTwo = new ArrayList<Creature>();
 	private List<Creature> levelThree = new ArrayList<Creature>();
+	
+	// Stretch goal: convert to list of lists for arbitrary number of levels
 	// private List<List<Creature>> levels;
 	
 	public Game(String filename) throws IOException {
@@ -87,104 +89,6 @@ public class Game {
 		
 		
 		return true;
-	}
-	
-	public void playGame() {
-		
-		// Game loop: play the game while we still have questions to answer (WIN) and/or we still have life (LOSE).
-		while(life > 0 && !checkIfWin()) {
-			
-			// Step 1: interact with the monster based on our current position
-			interactWithMonster();
-			
-		
-		}
-		
-		// If we won the game (REFACTOR)
-		if(checkIfWin()) {
-			System.out.println("Wow Congratulations! You really know your stuff.");
-			System.out.println("Now go into the world with your head held high knowing you beat the maze and that you are a true Java Developer!");
-		}
-	}
-	
-	public void interactWithMonster() {
-		// First, check what level we're currently on.
-		if(this.x == 0) {
-			System.out.println("\nYou are on Level 1.  You have " + life + " life left.");
-			
-			// If we haven't answered a question from the current monster, then prompt their question.
-			if(!this.levelOne.get(y).isAnsweredCorrectly()) {
-				
-				System.out.println("\nAs you enter the maze you encounter a strange Creature.\r");
-				System.out.println("RRRR! who goes there? You shall not pass unless you can answer my question correctly.\n");
-				
-				// Print out the current question we're on.
-				printOneQuestion();
-				
-				// Answer the question
-				answerQuestion();
-				
-			}
-			
-			// Assuming we answer the question correctly, we get to move on
-			
-		}
-		else if(this.x == 1) {
-			System.out.println("\nYou are on Level 2.  You have " + life + " life left.");
-			
-			// If we haven't answered a question from the current monster, then prompt their question.
-			if(!this.levelTwo.get(y).isAnsweredCorrectly()) {
-				
-				System.out.println("\nAs you enter the maze you encounter a strange Creature.\r");
-				System.out.println("RRRR! who goes there? You shall not pass unless you can answer my question correctly.\n");
-				
-				// Print out the current question we're on.
-				printOneQuestion();
-				
-				// Answer the question
-				answerQuestion();
-				
-			}
-			
-			// Assuming we answer the question correctly, we get to move on
-		}
-		else {
-			System.out.println("\nYou are on Level 3.  You have " + life + " life left.");
-			
-			// If we haven't answered a question from the current monster, then prompt their question.
-			if(!this.levelThree.get(y).isAnsweredCorrectly()) {
-				
-				System.out.println("\nAs you enter the maze you encounter a strange Creature.\r");
-				System.out.println("RRRR! who goes there? You shall not pass unless you can answer my question correctly.\n");
-				
-				// Print out the current question we're on.
-				printOneQuestion();
-				
-				// Answer the question
-				answerQuestion();
-				
-			}
-			
-			// Assuming we answer the question correctly, we get to move on
-			
-			
-		}
-		System.out.println("\n");
-	}
-	
-	// DEBUG: print all questions/answers
-	public void printAll() {
-		System.out.println("Level 1 Questions");
-		for(int i = 0; i < levelOne.size(); i++)
-			System.out.println(levelOne.get(i));
-		
-		System.out.println("Level 2 Questions");
-		for(int i = 0; i < levelTwo.size(); i++)
-			System.out.println(levelTwo.get(i));
-		
-		System.out.println("Level 3 Questions");
-		for(int i = 0; i < levelThree.size(); i++)
-			System.out.println(levelThree.get(i));
 	}
 	
 	public void printOneQuestion() {
@@ -310,59 +214,54 @@ public class Game {
 		// Use a combination of InputStream and BufferedReader to read from the file on each line.
 		InputStream inputStream = new FileInputStream(new File(filename));
 	    try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
-	    	
-	    	
 	        String line;
 	        
 	        // Current level.
 	        // THIS LOGIC FAILS IF WE HAVE MULTIPLE LEVELS
 	        int currentReadLevel = 1;
 	        
-	        // How many levels?
-	        line = br.readLine().trim();
+	        while ((line = br.readLine()) != null) {
 	        	
-        	// Initial number of levels
-        	int level = Integer.parseInt(line);
-        	
-        	// iterates through each level
-        	for(int i = 0; i < level; i++) {
-        		
-        		// Get the total # of questions
-        		int totalQuestions = Integer.parseInt(br.readLine().trim());
-        		
-        		// Iterate through each question
-        		for(int j = 0; j < totalQuestions; j++) {
-        			
-        			// Read the question, the 4 answers, and the index of the correct answer
-        			String question = br.readLine().trim();
-        			String answerOne = br.readLine().trim();
-        			String answerTwo = br.readLine().trim();
-        			String answerThree = br.readLine().trim();
-        			String answerFour = br.readLine().trim();
-        			int correctIdx = Integer.parseInt(br.readLine().trim());		
-        			
-        			
-        			// Which list are we adding this to?  Polymorphism :)
-        			if(currentReadLevel == 1)
-        				levelOne.add(new JavaCreature1(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
-        				
-        			else if(currentReadLevel == 2)
-        				levelTwo.add(new JavaCreature2(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
-        				
-        			else
-        				levelThree.add(new JavaCreature3(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
-        			
-        		}
-        		
-        		// After reading all questions from a specific level, increment this to move onto the next level to read
-        		currentReadLevel++;
-        	}
+	        	line = line.trim();
+	        	
+	        	// Initial number of levels
+	        	int level = Integer.parseInt(line);
+	        	
+	        	// iterates through each level
+	        	for(int i = 0; i < level; i++) {
+	        		
+	        		// Get the total # of questions
+	        		int totalQuestions = Integer.parseInt(br.readLine().trim());
+	        		
+	        		// Iterate through each question
+	        		for(int j = 0; j < totalQuestions; j++) {
+	        			
+	        			// Read the question, the 4 answers, and the index of the correct answer
+	        			String question = br.readLine().trim();
+	        			String answerOne = br.readLine().trim();
+	        			String answerTwo = br.readLine().trim();
+	        			String answerThree = br.readLine().trim();
+	        			String answerFour = br.readLine().trim();
+	        			int correctIdx = Integer.parseInt(br.readLine().trim());		
+	        			
+	        			
+	        			// Which list are we adding this to? 
+	        			if(currentReadLevel == 1)
+	        				levelOne.add(new JavaCreature1(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+	        				
+	        			else if(currentReadLevel == 2)
+	        				levelTwo.add(new JavaCreature2(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+	        				
+	        			else
+	        				levelThree.add(new JavaCreature3(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+	        			
+	        		}
+	        		
+	        		// After reading all questions from a specific level, increment this to move onto the next level to read
+	        		currentReadLevel++;
+	        	}
+	        }
 	    }
 	}
-
-	
-	
-	
-	
 	
 }
