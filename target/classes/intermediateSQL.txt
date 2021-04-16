@@ -1,0 +1,88 @@
+
+
+Which of the following statements regarding database administration using SQL is false?
+
+Users of a database are often granted different levels of privileges and only *some users can perform functions that alter the structure of the database.
+
+
+SQL is very safe and it can be tested directly on live databases.
+
+
+Data should be backed up before executing SQL statements that drop data or alter the structure of the database
+
+
+In real life. SQL is often tested in a development environment before rolling out to the production environment.
+2
+
+
+
+Which of these statement about Primary keys is false?
+
+All tables have at least one primary key
+
+Primary keys are always unique in a table
+
+Adding a primary key to a table slows down INSERT operations into that table. However, the benefits usually outweighs the small penalty in performance.
+
+Primary keys are automatically indexed
+1
+
+
+Which of these SQL statements will create an index on the column surname in the table club_member?
+INDEX club_member ON surname
+CREATE INDEX surname_idx ON club_member( surname )
+CREATE INDEX surname_idx ON club_member ORDER BY surname
+INDEX club_member ORDER BY surname
+2
+
+
+
+
+Which of these statements about indexes is false?
+
+Indexes are always unique values.
+
+
+Indexes slow down any write operations but sometimes the penalty in performance is justified if a table is looked up more often then it is written to.
+
+
+Indexes speeds up retrieval operations but they must be used judicially because they slow down write operations.
+
+
+Indexes cannot be specified when tables are created with SQL statements. They can only be added after the tables have been created.
+1
+
+
+
+
+
+Which of these statements is true regarding foreign keys?
+
+Foreign keys can span more than two tables.
+
+
+Foreign keys are kept in countries other than the ones that the database is physically stored.
+
+
+Foreign keys cannot be specified at the time the table is created and must be added after it has been created.
+
+
+Foreign keys are useful for data integrity by making sure that values inserted into a table exist in another table.
+4
+
+
+
+
+Monetary values are best store in a database using which data type?
+
+Variable length strings (VARCHAR)
+
+
+Fixed length strings (CHAR)
+
+
+Floating point numbers with 2 decimal places ( FLOAT(size, 2) )
+
+
+Integer (INT), storing the values in the smallest unit of the currency (example, cents).
+4
