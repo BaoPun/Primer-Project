@@ -12,9 +12,9 @@ import java.util.List;
 import controller.GameController;
 import exceptions.InvalidAnswerException;
 import model.Creature;
-import model.JavaCreature1;
-import model.JavaCreature2;
-import model.JavaCreature3;
+import model.JavaCreature;
+import model.DataStructuresCreature;
+import model.SQLCreature;
 
 /**
  * This class contains the player's life, and the generated levels of the maze.
@@ -247,13 +247,13 @@ public class Game {
 	        			
 	        			// Which list are we adding this to? 
 	        			if(currentReadLevel == 1)
-	        				levelOne.add(new JavaCreature1(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+	        				levelOne.add(new JavaCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "Java"));
 	        				
 	        			else if(currentReadLevel == 2)
-	        				levelTwo.add(new JavaCreature2(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+	        				levelTwo.add(new DataStructuresCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "Data Structures"));
 	        				
 	        			else
-	        				levelThree.add(new JavaCreature3(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+	        				levelThree.add(new SQLCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "SQL"));
 	        			
 	        		}
 	        		

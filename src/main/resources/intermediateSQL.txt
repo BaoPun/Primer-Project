@@ -1,16 +1,9 @@
 
 
 Which of the following statements regarding database administration using SQL is false?
-
-Users of a database are often granted different levels of privileges and only *some users can perform functions that alter the structure of the database.
-
-
+Users of a database are often granted different levels of privileges and only some users can perform functions that alter the structure of the database.
 SQL is very safe and it can be tested directly on live databases.
-
-
 Data should be backed up before executing SQL statements that drop data or alter the structure of the database
-
-
 In real life. SQL is often tested in a development environment before rolling out to the production environment.
 2
 

@@ -27,14 +27,14 @@ public class Creature {
 	
 	
 	
-	public Creature(String question, String a1, String a2, String a3, String a4, int correctIdx, boolean isAnsweredCorrectly, String typeOfQuestion) {
+	public Creature(String question, String a1, String a2, String a3, String a4, int correctIdx, String typeOfQuestion) {
 		this.question = question;
 		this.answers[0] = a1;
 		this.answers[1] = a2;
 		this.answers[2] = a3;
 		this.answers[3] = a4;
 		this.correctIdx = correctIdx;
-		this.isAnsweredCorrectly = isAnsweredCorrectly;
+		this.isAnsweredCorrectly = false;
 		this.typeOfQuestion = typeOfQuestion;
 	}
 

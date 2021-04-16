@@ -1,5 +1,5 @@
 3
-4					
+4			
 What is a variable?		
 No one knows 		
 Containers for storing data values
@@ -24,23 +24,47 @@ Yes
 No
 Don't mess with the Reflections API
 3
-2
-How do you loop through an array?
-Yell at the computer to loop.
-Ask computer nicely
-Write binary for that code
-Use a for loop
 4
-What is a constructor?
-A special method that creates an instance of a class
-It constructs buildings
-It constructs pizza
-It doesn't construct anything
+Which method is used to assign an object to a Java ArrayList?
+new()
+add()
+toString()
+put()
+2
+Which method is called to remove duplicates from a Java HashSet of type Name called names?
+equals()
+compareTo()
+remove()
+hashCode()
 1
+Which Java Set data structure sorts the data automatically?
+SortSet
+TreeSet
+HashSort
+HashSet
+2
+Which method is used to check if a key is present in a Java HashMap?
+get()
+parse()
+containsKey()
+hasKey()
+3
+3
+Which of the following statements regarding database administration using SQL is false?
+Users of a database are often granted different levels of privileges and only some users can perform functions that alter the structure of the database.
+SQL is very safe and it can be tested directly on live databases.
+Data should be backed up before executing SQL statements that drop data or alter the structure of the database
+In real life. SQL is often tested in a development environment before rolling out to the production environment.
+2
+Which of these statement about Primary keys is false?
+All tables have at least one primary key
+Primary keys are always unique in a table
+Adding a primary key to a table slows down INSERT operations into that table. However, the benefits usually outweighs the small penalty in performance.
+Primary keys are automatically indexed
 1
-2 + 2 = ?
-one
-two
-three
-four
+Monetary values are best store in a database using which data type?
+Variable length strings (VARCHAR)
+Fixed length strings (CHAR)
+Floating point numbers with 2 decimal places ( FLOAT(size, 2) )
+Integer (INT), storing the values in the smallest unit of the currency (example, cents).
 4

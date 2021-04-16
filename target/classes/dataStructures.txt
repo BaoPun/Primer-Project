@@ -1,32 +1,27 @@
-
 Which method is used to assign an object to a Java ArrayList?
 new()
 add()
 toString()
 put()
 2
-
 A Java LinkedList is used in lieu of an ArrayList because a LinkedList _____. 
 uses keys to retrieve values
 performs, adds and removals better
 uses index positions to retrieve values
 is easier to implement
 2
-
 Which method is called to remove duplicates from a Java HashSet of type Name called names?
 equals()
 compareTo()
 remove()
 hashCode()
 1
-
 Which Java Set data structure sorts the data automatically?
 SortSet
 TreeSet
 HashSort
 HashSet
 2
-
 Which method is used to check if a key is present in a Java HashMap?
 get()
 parse()
