@@ -23,7 +23,7 @@ Maybe
 Yes
 No
 Don't mess with the Reflections API
-3			
+3
 2
 How do you loop through an array?
 Yell at the computer to loop.

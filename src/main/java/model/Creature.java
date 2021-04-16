@@ -47,6 +47,13 @@ public class Creature {
 		this.isAnsweredCorrectly = isAnsweredCorrectly;
 	}
 	
-	
+	@Override
+	public String toString() {
+		String questionString = "Question: \"" + this.question + "\"\n";
+		String answersString = "";
+		for(int i = 0; i < 4; i++)
+			answersString += "\t" + (i+1) + ". " + this.answers[i] + "\n";
+		return questionString + answersString;
+	}
 	
 }
