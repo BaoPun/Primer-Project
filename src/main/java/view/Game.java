@@ -12,6 +12,9 @@ import java.util.List;
 import controller.GameController;
 import exceptions.InvalidAnswerException;
 import model.Creature;
+import model.JavaCreature1;
+import model.JavaCreature2;
+import model.JavaCreature3;
 
 /**
  * This class contains the player's life, and the generated levels of the maze.
@@ -307,53 +310,53 @@ public class Game {
 		// Use a combination of InputStream and BufferedReader to read from the file on each line.
 		InputStream inputStream = new FileInputStream(new File(filename));
 	    try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+	    	
+	    	
 	        String line;
 	        
 	        // Current level.
 	        // THIS LOGIC FAILS IF WE HAVE MULTIPLE LEVELS
 	        int currentReadLevel = 1;
 	        
-	        while ((line = br.readLine()) != null) {
+	        // How many levels?
+	        line = br.readLine().trim();
 	        	
-	        	line = line.trim();
-	        	
-	        	// Initial number of levels
-	        	int level = Integer.parseInt(line);
-	        	
-	        	// iterates through each level
-	        	for(int i = 0; i < level; i++) {
-	        		
-	        		// Get the total # of questions
-	        		int totalQuestions = Integer.parseInt(br.readLine().trim());
-	        		
-	        		// Iterate through each question
-	        		for(int j = 0; j < totalQuestions; j++) {
-	        			
-	        			// Read the question, the 4 answers, and the index of the correct answer
-	        			String question = br.readLine().trim();
-	        			String answerOne = br.readLine().trim();
-	        			String answerTwo = br.readLine().trim();
-	        			String answerThree = br.readLine().trim();
-	        			String answerFour = br.readLine().trim();
-	        			int correctIdx = Integer.parseInt(br.readLine().trim());		
-	        			
-	        			
-	        			// Which list are we adding this to? 
-	        			if(currentReadLevel == 1)
-	        				levelOne.add(new Creature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
-	        				
-	        			else if(currentReadLevel == 2)
-	        				levelTwo.add(new Creature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
-	        				
-	        			else
-	        				levelThree.add(new Creature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
-	        			
-	        		}
-	        		
-	        		// After reading all questions from a specific level, increment this to move onto the next level to read
-	        		currentReadLevel++;
-	        	}
-	        }
+        	// Initial number of levels
+        	int level = Integer.parseInt(line);
+        	
+        	// iterates through each level
+        	for(int i = 0; i < level; i++) {
+        		
+        		// Get the total # of questions
+        		int totalQuestions = Integer.parseInt(br.readLine().trim());
+        		
+        		// Iterate through each question
+        		for(int j = 0; j < totalQuestions; j++) {
+        			
+        			// Read the question, the 4 answers, and the index of the correct answer
+        			String question = br.readLine().trim();
+        			String answerOne = br.readLine().trim();
+        			String answerTwo = br.readLine().trim();
+        			String answerThree = br.readLine().trim();
+        			String answerFour = br.readLine().trim();
+        			int correctIdx = Integer.parseInt(br.readLine().trim());		
+        			
+        			
+        			// Which list are we adding this to?  Polymorphism :)
+        			if(currentReadLevel == 1)
+        				levelOne.add(new JavaCreature1(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+        				
+        			else if(currentReadLevel == 2)
+        				levelTwo.add(new JavaCreature2(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+        				
+        			else
+        				levelThree.add(new JavaCreature3(question, answerOne, answerTwo, answerThree, answerFour, correctIdx));
+        			
+        		}
+        		
+        		// After reading all questions from a specific level, increment this to move onto the next level to read
+        		currentReadLevel++;
+        	}
 	    }
 	}
 
