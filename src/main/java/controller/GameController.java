@@ -3,6 +3,9 @@ package controller;
 import java.io.IOException;
 import java.util.Scanner;
 
+import exceptions.InvalidAnswerException;
+import exceptions.InvalidDirectionException;
+import exceptions.InvalidMovementException;
 import exceptions.InvalidStartException;
 import view.Game;
 
@@ -28,7 +31,6 @@ public class GameController {
 		System.out.println("Otherwise leave now and save yourself the embarrassment. To get out of the Maze successfully, answer each question correctly.");
 		System.out.println("For this game, you will start out with 30 life points.");
 		System.out.println("Every time you answer correctly, your life will be deducted by 10. If your life hits 0 you lose. Good Luck!\n");
-		
 		
 		boolean invalid = true;
 		
@@ -61,6 +63,8 @@ public class GameController {
 	 * Game loop to interact with the Game object
 	 */
 	public void play() {
+		
+		// Introduce the user to the game
 		introduction();
 		
 		// Game loop: play the game while we still have questions to answer (WIN) and/or we still have life (LOSE).
@@ -68,6 +72,14 @@ public class GameController {
 			
 			// Step 1: interact with the monster based on our current position
 			interactWithMonster();
+			
+			// Step 2 Stretch goal: show the current maze location
+			
+			
+			// Step 3 Stretch goal: implement move function
+			move();
+			
+			break;
 			
 		}
 		
@@ -83,19 +95,143 @@ public class GameController {
 		// If we haven't answered a question from the current monster, then prompt their question.
 		if(!game.getOneQuestion().isAnsweredCorrectly()) {
 			
-			System.out.println("\nAs you enter the maze you encounter a strange Creature.\r");
+			System.out.println("\nAs you enter the maze you encounter a strange Creature.");
 			System.out.println("RRRR! who goes there? You shall not pass unless you can answer my question correctly.\n");
 			
 			// Print out the current question we're on.
 			game.printOneQuestion();
 			
 			// Answer the question
-			game.answerQuestion();
-	
+			answerQuestion();
 		}
 		
 		// Assuming we answer the question correctly, we get to move on
 		System.out.println("\n");
+	}
+	
+	public void answerQuestion() {
+		
+		boolean invalid = true;
+		do {
+			try {
+				// Choose an answer (1-4) or 0 (quit)
+				System.out.print("Please select an answer from 1-4 or select 0 to quit\n> ");
+				String input = scanner.next();
+				
+				// If input is not 1 and not 0, throw an exception and try again.
+				if(!input.equals("0") && !input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4"))
+					throw new InvalidAnswerException(input);
+				
+				// If 0, quit.  Otherwise, proceed as normal.
+				if(input.equals("0")) {
+					System.out.println("\nGame has ended.  Come back in 100 years when you're ready.");
+					System.exit(1);
+				}
+				
+				// otherwise, compare the input with the correct answer on the question we're on.
+				int answer = Integer.parseInt(input);
+				
+				// If the answer is incorrect
+				if(answer != game.getOneQuestion().getCorrectAnswerIdx()) {
+					// Incorrect answer, print message and deduct life.
+					System.out.println("GRRR, the creature is disappointed in your lack of knowledge.  As penalty, you have been shaved off 10 life points.");
+					game.setLife(game.getLife() - Game.loss);
+					System.out.println("You now have " + game.getLife() + " life left.");
+					
+					// If we hit 0, we are a wee bit dead. :(
+					if(game.getLife() <= 0) {
+						this.displayLoseMessage();
+						System.exit(1);
+					}
+					else
+						System.out.println("However, you still cannot move on, so you have to answer the question again.\n");
+					
+				}
+				else {
+					
+					// Print a successful message
+					System.out.println("The creature looks happy, as if it received a lot of head pats.  You may now proceed.");
+					
+					// Change the boolean to be true for the current position
+					game.getOneQuestion().setAnsweredCorrectly(true);
+					
+					// MVP: move onto next question on our level
+					// game.setY(game.getY() + 1);
+					
+					// But if we finished the last question on the current level, move onto the next.  Another function :)
+					// game.moveOntoNextLevel();
+					
+					// Stretch goal: comment out 2 lines above
+					
+					// Don't answer the question again.
+					invalid = false;
+				}
+			} 
+			catch(InvalidAnswerException e) {
+				System.out.println(e.getMessage());
+			}
+		} while(invalid);
+	}
+	
+	public void showMaze() {
+		
+	}
+	
+	public void move() {
+		boolean invalid = true;
+		do {
+			try {
+				System.out.print("Please choose to move up (1), down (2), left (3), or right (4):\n> ");
+				String input = scanner.next();
+				
+				if(!input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4"))
+					throw new InvalidMovementException(input);
+				
+				// Which direction?
+				if(input.equals("1")) {
+					// Check if we are able to move in this direction
+					if(game.getX() <= 0)
+						throw new InvalidDirectionException("UP");
+					
+					// Move up
+					game.setX(game.getX() - 1);
+				}
+				else if(input.equals("2")) {
+					// Check if we are able to move in this direction
+					if(game.getX() >= game.getNumLevels())
+						throw new InvalidDirectionException("DOWN");
+					
+					// Move down
+					game.setX(game.getX() + 1);
+				}
+				else if(input.equals("3")) {
+					// Check if we are able to move in this direction
+					if(game.getY() <= 0)
+						throw new InvalidDirectionException("LEFT");
+					
+					// Move left
+					game.setY(game.getY() - 1);
+				}
+				else {
+					// Check if we are able to move in this direction
+					if(game.getY() >= game.getNumQuestionsOnLevel())
+						throw new InvalidDirectionException("RIGHT");
+					
+					// Move right
+					game.setY(game.getY() + 1);
+				}
+				
+				invalid = false;
+				
+			}
+			catch(InvalidMovementException e) {
+				System.out.println(e.getMessage());
+			}
+			catch(InvalidDirectionException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		} while(invalid);
 	}
 	
 	/**
