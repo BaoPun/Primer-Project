@@ -92,17 +92,6 @@ public class Game {
 	}
 	
 	/**
-	 * If we are finished with the last question on the current level, move onto the next
-	 */
-	public void moveOntoNextLevel() {
-		
-		if(this.y >= levels.get(this.x).size()) {
-			this.y = 0;
-			this.x++;
-		}
-	}
-	
-	/**
 	 * Output contents of the maze.
 	 */
 	public void showMaze() {
