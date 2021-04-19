@@ -72,11 +72,17 @@ public class GameController {
 		while(game.getLife() > 0 && !game.checkIfWin()) {
 			interactWithMonster();
 			
-			// Step 2 Stretch goal: show the current maze location
-			game.showMaze();
-			
-			// Step 3 Stretch goal: implement move function
-			move();
+			// If answering the question correctly results in us winning, then escape the game loop and print the message.
+			// Otherwise, move our character anywhere on the maze.
+			if(!game.checkIfWin()) {
+				// Step 2 Stretch goal: show the current maze location
+				game.showMaze();
+				
+				// Step 3 Stretch goal: implement move function
+				move();
+			}
+			else
+				break;
 			
 		}
 		
@@ -212,7 +218,7 @@ public class GameController {
 				}
 				else if(input.equals("2")) {
 					// Check if we are able to move in this direction
-					if(game.getX() >= game.getNumLevels())
+					if(game.getX() >= game.getNumLevels() - 1)
 						throw new InvalidDirectionException("DOWN");
 					
 					// Move down
@@ -228,7 +234,7 @@ public class GameController {
 				}
 				else {
 					// Check if we are able to move in this direction
-					if(game.getY() >= game.getNumQuestionsOnLevel())
+					if(game.getY() >= game.getNumQuestionsOnLevel() - 1)
 						throw new InvalidDirectionException("RIGHT");
 					
 					// Move right
