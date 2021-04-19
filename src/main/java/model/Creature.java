@@ -1,7 +1,7 @@
 package model;
 
 /**
- * A base creature will have a given set of questions and answers
+ * A base creature will have a given set of questions and answers.
  * @author baoph
  *
  */
@@ -23,8 +23,6 @@ public class Creature {
 		this.isAnsweredCorrectly = false;
 		this.typeOfQuestion = "Java";
 	}
-	
-	
 	
 	
 	public Creature(String question, String a1, String a2, String a3, String a4, int correctIdx, String typeOfQuestion) {

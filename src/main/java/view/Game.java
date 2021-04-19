@@ -83,10 +83,17 @@ public class Game {
 		return true;
 	}
 	
+	/**
+	 * Prints the current creature's question and list of answers based on where we are on the maze.
+	 */
 	public void printOneQuestion() {
 		System.out.println(levels.get(this.x).get(this.y));
 	}
 	
+	/**
+	 * Returns a single question based on where we are on the maze.
+	 * @return our position in the maze (x, y)
+	 */
 	public Creature getOneQuestion() {
 		return levels.get(this.x).get(this.y);
 	}
@@ -111,7 +118,13 @@ public class Game {
 	}
 	
 	
-	// Ugly method to read from the file
+	/**
+	 * This method takes in a file and extracts all questions and their types onto our data structures. <br>
+	 * Our data structure consists of 3 different lists that represent the levels in our maze.  <br>
+	 * Each level contains a different type of question: Java, Data Structures, and SQL.
+	 * @param filename
+	 * @throws IOException
+	 */
 	private void readFromFile(String filename) throws IOException {
 		
 		// Use a combination of InputStream and BufferedReader to read from the file on each line.
