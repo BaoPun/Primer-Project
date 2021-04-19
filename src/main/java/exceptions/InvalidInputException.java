@@ -6,7 +6,7 @@ package exceptions;
  * @author baoph
  *
  */
-public class InvalidInputException extends Exception{
+public abstract class InvalidInputException extends Exception{
 	
 	public InvalidInputException(String input) {
 		super("Invalid input: " + input);
