@@ -168,7 +168,6 @@ public class Game {
 	    try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
 	        
 	        // Current level.
-	        // THIS LOGIC FAILS IF WE HAVE MULTIPLE LEVELS
 	        int currentReadLevel = 1;
 	        	
         	String line = br.readLine().trim();
@@ -192,7 +191,6 @@ public class Game {
         			String answerThree = br.readLine().trim();
         			String answerFour = br.readLine().trim();
         			int correctIdx = Integer.parseInt(br.readLine().trim());		
-        			
         			
         			// Which list are we adding this to? 
         			if(currentReadLevel == 1)

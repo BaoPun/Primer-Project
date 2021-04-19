@@ -1,0 +1,13 @@
+List of User Stories
+
+as a user I am greeted with an introduction to the game plot
+as a user at intro I can choose to start or exit the game
+as a user I am faced with creature problem/riddle --> a question
+as a user I can answer those questions
+as a user I can monitor my life level
+as a user I can see what category of question I am on
+as a user if I answer correctly I am prompted with a message
+as a user if I answer incorrectly life is decremented
+as a user if life is decremented to zero I can lose the game 
+as a user upon losing I will be prompted with an exit message
+as a user if I answer correct through each level I can win the game

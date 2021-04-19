@@ -2,6 +2,7 @@ First line is the total # of levels, assumed to be in numerical order.
 
 Each level has the following format:
 	# of questions per level
+	For each question:
 		Question
 		Answer1
 		Answer2
