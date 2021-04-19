@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.Scanner;
 
+import exceptions.InvalidAnswerException;
 import exceptions.InvalidStartException;
 import view.Game;
 
@@ -58,23 +59,25 @@ public class GameController {
 	}
 	
 	/**
-	 * Game loop to interact with the Game object
+	 * Game loop to interact with the Game object.<br>
+	 * This function is what allows the game to be played until the win or loss condition
 	 */
 	public void play() {
 		introduction();
 		
 		// Game loop: play the game while we still have questions to answer (WIN) and/or we still have life (LOSE).
-		while(game.getLife() > 0 && !game.checkIfWin()) {
-			
-			// Step 1: interact with the monster based on our current position
+		while(game.getLife() > 0 && !game.checkIfWin())
 			interactWithMonster();
-			
-		}
 		
 		if(game.checkIfWin())
 			displayWinMessage();
 	}
 	
+	/**
+	 * This function is responsible for setting up the interactions with the creature. <br>
+	 * It first prints out our current level and amount of life points remaining. <br>
+	 * Afterwards, if we haven't answered the question from the monster, then it will then transition to another function, answerOneQuestion().
+	 */
 	public void interactWithMonster() {
 		
 		// Print what level we're on.
@@ -90,12 +93,86 @@ public class GameController {
 			game.printOneQuestion();
 			
 			// Answer the question
-			game.answerQuestion();
+			answerQuestion();
 	
 		}
 		
 		// Assuming we answer the question correctly, we get to move on
 		System.out.println("\n");
+	}
+	
+	/**
+	 * This function deals with logic regarding the answering of a question. <br>
+	 * The user is asked to select an answer from 1-4 (or 0 if they want to quit).  
+	 * If the user answers incorrectly, then they lose 10 life points.  If they have no life remaining, then they lose. <br>
+	 * Otherwise, the user will automatically be moved onto the next question in the current level, <br>
+	 * Or move onto the next level if they finished the last question in the current level.
+	 */
+	public void answerQuestion() {
+		
+		boolean invalid = true;
+		do {
+			try {
+				// Choose an answer (1-4) or 0 (quit)
+				System.out.print("Please select an answer from 1-4 or select 0 to quit\n> ");
+				String input = GameController.scanner.next();
+				
+				// If input is not 1 and not 0, throw an exception and try again.
+				if(!input.equals("0") && !input.equals("1") && !input.equals("2") && !input.equals("3") && !input.equals("4"))
+					throw new InvalidAnswerException(input);
+				
+				// If 0, quit.  Otherwise, proceed as normal.
+				if(input.equals("0")) {
+					System.out.println("\nGame has ended.  Come back in 100 years when you're ready.");
+					System.exit(1);
+				}
+				
+				// otherwise, compare the input with the correct answer on the question we're on.
+				int answer = Integer.parseInt(input);
+				
+				// If the answer is incorrect
+				if(answer != game.getOneQuestion().getCorrectAnswerIdx()) {
+					// Incorrect answer, print message and deduct life.
+					System.out.println("GRRR, the creature is dissapointed in your lack of knowledge.  As penalty, you have been shaved off 10 life points.");
+					game.setLife(game.getLife() - Game.loss);
+					System.out.println("You now have " + game.getLife() + " life left.");
+					
+					// If we hit 0, we are a wee bit dead. :(
+					if(game.getLife() <= 0) {
+						System.out.println("\nWell, well, well… and you call yourself a Java Developer.");
+						System.out.println("Jokes on you. It’s clear that you need some help, so here’s a resource that will whip you into shape:");
+						System.out.println("\t\t\thttps://www.w3schools.com/java/");
+						return;
+					}
+					else
+						System.out.println("However, you still cannot move on, so you have to answer the question again.\n");
+					
+				}
+				else {
+					
+					// Print a successful message
+					System.out.println("The creature looks happy, as if it received a lot of head pats.  You may now proceed.");
+					
+					// Change the boolean to be true for the current position
+					game.getOneQuestion().setAnsweredCorrectly(true);
+					
+					// MVP: move onto next question on our level
+					game.setY(game.getY() + 1);
+					
+					// But if we finished the last question on the current level, move onto the next.  Another function :)
+					game.moveOntoNextLevel();
+					
+					// Don't answer the question again.
+					invalid = false;
+				}
+				
+				
+				
+			} 
+			catch(InvalidAnswerException e) {
+				System.out.println(e.getMessage());
+			}
+		} while(invalid);
 	}
 	
 	/**
