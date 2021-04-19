@@ -102,6 +102,25 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Output contents of the maze.
+	 */
+	public void showMaze() {
+		System.out.println("Current Maze Setup");
+		for(int i = 0; i < this.getNumLevels(); i++) {
+			for(int j = 0; j < this.levels.get(i).size(); j++) {
+				// If we are currently on (i, j), print out a specific character
+				if(i == this.x && j == this.y)
+					System.out.print("[ T ]");
+				
+				else
+					System.out.print("[   ]");
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
+	
 	
 	// Ugly method to read from the file
 	private void readFromFile(String filename) throws IOException {

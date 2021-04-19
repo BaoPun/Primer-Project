@@ -74,12 +74,10 @@ public class GameController {
 			interactWithMonster();
 			
 			// Step 2 Stretch goal: show the current maze location
-			
+			game.showMaze();
 			
 			// Step 3 Stretch goal: implement move function
 			move();
-			
-			break;
 			
 		}
 		
@@ -173,11 +171,10 @@ public class GameController {
 		} while(invalid);
 	}
 	
-	public void showMaze() {
-		
-	}
 	
 	public void move() {
+		
+		
 		boolean invalid = true;
 		do {
 			try {
