@@ -5,7 +5,7 @@ package model;
  * @author baoph
  *
  */
-public class Creature {
+public abstract class Creature {
 	
 	private String question;
 	private String[] answers = new String[4];
@@ -21,7 +21,7 @@ public class Creature {
 		this.answers[3] = a4;
 		this.correctIdx = correctIdx;
 		this.isAnsweredCorrectly = false;
-		this.typeOfQuestion = "Java";
+		this.typeOfQuestion = "***I am Polymorphic***";
 	}
 	
 	
