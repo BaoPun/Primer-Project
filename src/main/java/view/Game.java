@@ -9,8 +9,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.GameController;
-import exceptions.InvalidAnswerException;
 import model.Creature;
 import model.JavaCreature;
 import model.DataStructuresCreature;
@@ -22,17 +20,17 @@ import model.SQLCreature;
  *
  */
 public class Game {
-	private int life;	// Expert = 1, Novice = 2, Beginner = 3
+	private int life;	// Expert = 10, Novice = 20, Beginner = 30
 	private int x, y;	// row, col position of where we are
 	public final static int loss = 10;	// always losing 10 life points.
 	
 	// MVP: 3 creatures per level
-	private List<Creature> levelOne = new ArrayList<Creature>();			
-	private List<Creature> levelTwo = new ArrayList<Creature>();
-	private List<Creature> levelThree = new ArrayList<Creature>();
+	/*
+		List<Creature> levelOne = new ArrayList<Creature>(), levelTwo = new ArrayList<Creature>(), levelThree = new ArrayList<Creature>();
+	*/
 	
 	// Stretch goal: convert to list of lists for arbitrary number of levels
-	// private List<List<Creature>> levels;
+	private List<List<Creature>> levels = new ArrayList<List<Creature>>();
 	
 	public Game(String filename) throws IOException {
 		this.life = 30;
@@ -64,33 +62,23 @@ public class Game {
 		this.life = life;
 	}
 	
-	/**
-	 * Checks all 3 levels to determine if we won the game.
-	 * For each level, we check if each question has successfully been answered.
-	 * @return True if we win, False otherwise
-	 */
+	public int getNumLevels() {
+		return this.levels.size();
+	}
+	
+	public int getNumQuestionsOnLevel() {
+		return this.levels.get(this.x).size();
+	}
+	
+	// Check if we won the game
 	public boolean checkIfWin() {
 		
-		// Check level 1
-		for(int i = 0; i < levelOne.size(); i++) {
-			if(!levelOne.get(i).isAnsweredCorrectly())
-				return false;
+		for(int i = 0; i < levels.size(); i++) {
+			for(int j = 0; j < levels.get(i).size(); j++) {
+				if(!levels.get(i).get(j).isAnsweredCorrectly())
+					return false;
+			}
 		}
-		
-		
-		// Check level 2
-		for(int i = 0; i < levelTwo.size(); i++) {
-			if(!levelTwo.get(i).isAnsweredCorrectly())
-				return false;
-		}
-		
-		
-		// Check level 3
-		for(int i = 0; i < levelThree.size(); i++) {
-			if(!levelThree.get(i).isAnsweredCorrectly())
-				return false;
-		}
-		
 		
 		return true;
 	}
@@ -99,14 +87,7 @@ public class Game {
 	 * Prints the current creature's question and list of answers based on where we are on the maze.
 	 */
 	public void printOneQuestion() {
-		if(this.x == 0) 
-			System.out.println(levelOne.get(y));
-		
-		else if(this.x == 1)
-			System.out.println(levelTwo.get(y));
-		
-		else 
-			System.out.println(levelThree.get(y));
+		System.out.println(levels.get(this.x).get(this.y));
 	}
 	
 	/**
@@ -114,43 +95,26 @@ public class Game {
 	 * @return our position in the maze (x, y)
 	 */
 	public Creature getOneQuestion() {
-		if(this.x == 0) 
-			return levelOne.get(y);
-		
-		else if(this.x == 1)
-			return levelTwo.get(y);
-		
-		else 
-			return levelThree.get(y);
+		return levels.get(this.x).get(this.y);
 	}
 	
-	
-	
 	/**
-	 * If we are finished with the last question on the current level, move onto the next level.
+	 * Output contents of the maze.
 	 */
-	public void moveOntoNextLevel() {
-		
-		// Level 1
-		if(this.x == 0) {
-			if(this.y >= levelOne.size()) {
-				this.y = 0;		// Reset the column
-				this.x++;		// But increment the row
+	public void showMaze() {
+		System.out.println("Current Maze Setup");
+		for(int i = 0; i < this.getNumLevels(); i++) {
+			for(int j = 0; j < this.levels.get(i).size(); j++) {
+				// If we are currently on (i, j), print out a specific character
+				if(i == this.x && j == this.y)
+					System.out.print("[ T ]");
+				
+				else
+					System.out.print("[   ]");
 			}
+			System.out.println();
 		}
-		
-		// Level 2
-		else if(this.x == 1) {
-			if(this.y >= levelTwo.size()) {
-				this.y = 0;		// Reset the column
-				this.x++;		// But increment the row
-			}
-		}
-		
-		// Level 3
-		else {
-			// DO SOMETHING HERE
-		}
+		System.out.println();
 	}
 	
 	
@@ -166,14 +130,9 @@ public class Game {
 		// Use a combination of InputStream and BufferedReader to read from the file on each line.
 		InputStream inputStream = new FileInputStream(new File(filename));
 	    try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
-	        
-	        // Current level.
-	        int currentReadLevel = 1;
-	        	
-        	String line = br.readLine().trim();
-        	
+	    	
         	// Initial number of levels
-        	int level = Integer.parseInt(line);
+        	int level = Integer.parseInt(br.readLine().trim());
         	
         	// iterates through each level
         	for(int i = 0; i < level; i++) {
@@ -181,10 +140,14 @@ public class Game {
         		// Get the total # of questions
         		int totalQuestions = Integer.parseInt(br.readLine().trim());
         		
+        		// Create a new level to store the questions onto.
+        		levels.add(new ArrayList<Creature>());
+        		
         		// Iterate through each question
         		for(int j = 0; j < totalQuestions; j++) {
         			
-        			// Read the question, the 4 answers, and the index of the correct answer
+        			// Read the type of question, the question, the 4 answers, and the index of the correct answer
+        			String type = br.readLine().trim();
         			String question = br.readLine().trim();
         			String answerOne = br.readLine().trim();
         			String answerTwo = br.readLine().trim();
@@ -192,24 +155,18 @@ public class Game {
         			String answerFour = br.readLine().trim();
         			int correctIdx = Integer.parseInt(br.readLine().trim());		
         			
-        			// Which list are we adding this to? 
-        			if(currentReadLevel == 1)
-        				levelOne.add(new JavaCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "Java"));
-        				
-        			else if(currentReadLevel == 2)
-        				levelTwo.add(new DataStructuresCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "Data Structures"));
-        				
-        			else
-        				levelThree.add(new SQLCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "SQL"));
-        			
+        			// Add to the current list, depending on the question type
+        			if(type.equals("Java"))
+        				levels.get(i).add(new JavaCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "Java"));
+        			else if(type.equals("Data Structures"))
+        				levels.get(i).add(new DataStructuresCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "Data Structures"));
+        			else if(type.equals("SQL"))
+        				levels.get(i).add(new SQLCreature(question, answerOne, answerTwo, answerThree, answerFour, correctIdx, "SQL"));
         		}
-        		
-        		// After reading all questions from a specific level, increment this to move onto the next level to read
-        		currentReadLevel++;
 	        }
 	    }
 	    catch(NumberFormatException e) {
-	    	System.out.println("Error, something is wrong with the format.  The program will now exit.");
+	    	System.out.println("Sadge, a formatting error occured.  The program will now exit.");
 	    	System.exit(1);
 	    }
 	}

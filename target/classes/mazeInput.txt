@@ -1,23 +1,27 @@
 3
 4			
+Java
 What is a variable?		
 No one knows 		
 Containers for storing data values
 An unknown numerical value
 Something you need to find
-2		
+2	
+Java	
 What is the JVM?
 Java virtual music
 A car part
 Java virtual machine
 Don't know
 3
+Java
 What would you use to print something to the console?
 Echo
 System.print
 System.out.println
 Console.log
 3
+Java
 Are Strings mutable?
 Maybe
 Yes
@@ -25,24 +29,28 @@ No
 Don't mess with the Reflections API
 3
 4
+Data Structures
 Which method is used to assign an object to a Java ArrayList?
 new()
 add()
 toString()
 put()
 2
+Data Structures
 Which method is called to remove duplicates from a Java HashSet of type Name called names?
 equals()
 compareTo()
 remove()
 hashCode()
 1
+Data Structures
 Which Java Set data structure sorts the data automatically?
 SortSet
 TreeSet
 HashSort
 HashSet
 2
+Data Structures
 Which method is used to check if a key is present in a Java HashMap?
 get()
 parse()
@@ -50,18 +58,21 @@ containsKey()
 hasKey()
 3
 3
+SQL
 Which of the following statements regarding database administration using SQL is false?
 Users of a database are often granted different levels of privileges and only some users can perform functions that alter the structure of the database.
 SQL is very safe and it can be tested directly on live databases.
 Data should be backed up before executing SQL statements that drop data or alter the structure of the database
 In real life. SQL is often tested in a development environment before rolling out to the production environment.
 2
+SQL
 Which of these statement about Primary keys is false?
 All tables have at least one primary key
 Primary keys are always unique in a table
 Adding a primary key to a table slows down INSERT operations into that table. However, the benefits usually outweighs the small penalty in performance.
 Primary keys are automatically indexed
 1
+SQL
 Monetary values are best store in a database using which data type?
 Variable length strings (VARCHAR)
 Fixed length strings (CHAR)
